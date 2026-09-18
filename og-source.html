@@ -72,13 +72,22 @@
     font-size: 20px; line-height: 1.5; color: var(--ink-soft);
     margin: 0 0 28px;
   }
+  /* The call to action the preview card otherwise lacks: the title under
+     the image states WHAT this is, nothing states what to do next. */
+  .cta {
+    display: inline-block;
+    font-size: 17px; font-weight: 700;
+    color: #fff; background: var(--fox);
+    border-radius: 6px; padding: 13px 24px;
+    margin-bottom: 22px;
+  }
   .chips { display: flex; gap: 8px; flex-wrap: wrap; }
   .chip {
     font-size: 14px; font-weight: 600;
     color: var(--acc-ink); background: var(--acc-bg);
     border-radius: 99px; padding: 7px 14px;
   }
-  .chip.free { color: #fff; background: var(--fox); }
+  .chip.free { color: var(--fox); background: #fbeee9; }
 
   /* ---- one analysis card, the result rather than the input ---- */
   .card {
@@ -136,11 +145,12 @@
 <div class="og">
   <div>
     <div class="brand">Bonfuchs</div>
-    <h1>Dein Kassenbon weiß mehr über dich <em>als dein Haushaltsbuch.</em></h1>
+    <h1>Was du wirklich isst. <em>Aus deinem Kassenbon.</em></h1>
     <p class="sub">
-      Ein Foto vom Bon. Daraus werden deine Ausgaben und dein
-      Ernährungsprofil erstellt.
+      Ein Foto genügt. Nährwerte, Zucker und Ausgaben werden automatisch
+      ausgewertet, ganz ohne Mahlzeiten-Logbuch.
     </p>
+    <div class="cta">Jetzt auf die Warteliste</div>
     <div class="chips">
       <span class="chip free">Kostenlos</span>
       <span class="chip">Aldi</span>
