@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Bonfuchs og:image 1200x630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  /* SOURCE FOR THE SOCIAL PREVIEW IMAGE.
+     Rendered headless at 1200x630 and cropped to the framed area.
+
+     The receipt is deliberately absent. A preview card is read in about a
+     second at thumbnail size, so it can carry one idea: here that idea is
+     the RESULT, not the input. Showing the till roll spent a third of the
+     width proving the app reads receipts, which nobody doubts and nobody
+     came for.
+
+     The pyramid is drawn as real trapezoids rather than stacked bars. At
+     this size the silhouette is the whole message: one shape tapers, the
+     other does not. */
+
+  :root {
+    --paper:   #f4f5f4;
+    --card:    #ffffff;
+    --ink:     #16191a;
+    --ink-soft:#4f5658;
+    --ink-faint:#858d8d;
+    --rule:    #e6e9e7;
+    --fox:     #b8451f;
+    --acc:     #3f7fa8;
+    --acc-ink: #2b5f7f;
+    --acc-bg:  #eef4f8;
+    --warn:    #e0806a;
+    --warn-ink:#b8543a;
+    --g1: #3f7f92; --g2: #5b98ac; --g3: #8fb8c9;
+    --g4: #e8a48c; --g5: #d9705a;
+  }
+  html, body { margin: 0; background: #d7dbd9; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 30px;
+  }
+
+  /* The exact export frame. */
+  .og {
+    width: 1200px; height: 630px;
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 464px 1fr;
+    gap: 50px;
+    padding: 64px;
+    box-sizing: border-box;
+    align-items: center;
+    outline: 1px solid #bbb;
+  }
+
+  .brand {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 19px; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--fox); margin-bottom: 24px;
+  }
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600; font-size: 52px; line-height: 1.08;
+    letter-spacing: -.02em; color: var(--ink); margin: 0 0 22px;
+  }
+  h1 em { font-style: normal; color: var(--acc-ink); }
+  .sub {
+    font-size: 20px; line-height: 1.5; color: var(--ink-soft);
+    margin: 0 0 28px;
+  }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    font-size: 14px; font-weight: 600;
+    color: var(--acc-ink); background: var(--acc-bg);
+    border-radius: 99px; padding: 7px 14px;
+  }
+  .chip.free { color: #fff; background: var(--fox); }
+
+  /* ---- one analysis card, the result rather than the input ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(22,25,26,.05), 0 16px 38px -18px rgba(22,25,26,.30);
+    padding: 26px 28px 28px;
+  }
+  .card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .card-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600; font-size: 22px; margin: 0; color: var(--ink);
+  }
+  .badge {
+    font-size: 13px; font-weight: 600;
+    color: var(--acc-ink); background: var(--acc-bg);
+    border-radius: 99px; padding: 5px 12px;
+  }
+
+  .bars { display: grid; gap: 14px; margin-bottom: 24px; }
+  .bar-top {
+    display: flex; justify-content: space-between;
+    font-size: 15px; color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .bar-top b {
+    color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 700;
+  }
+  .bar-top b em { font-style: normal; font-weight: 400; color: var(--ink-faint); }
+  .track {
+    height: 9px; border-radius: 99px; background: #eef0ef; overflow: hidden;
+  }
+  .track i { display: block; height: 100%; background: var(--acc); }
+  .track i.warn { background: var(--warn); }
+
+  .split {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 26px; align-items: end;
+    border-top: 1px solid var(--rule); padding-top: 22px;
+  }
+  figure { margin: 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+  figcaption {
+    text-align: center; font-size: 13px; color: var(--ink-faint);
+    margin-top: 9px;
+  }
+  .flag { color: var(--warn-ink); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="og">
+  <div>
+    <div class="brand">Bonfuchs</div>
+    <h1>Dein Kassenbon weiß mehr über dich <em>als dein Haushaltsbuch.</em></h1>
+    <p class="sub">
+      Ein Foto vom Bon. Daraus werden deine Ausgaben und dein
+      Ernährungsprofil erstellt.
+    </p>
+    <div class="chips">
+      <span class="chip free">Kostenlos</span>
+      <span class="chip">Aldi</span>
+      <span class="chip">Edeka</span>
+      <span class="chip">Lidl</span>
+      <span class="chip">Kaufland</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h2>Deine Auswertung</h2>
+      <span class="badge">Profil: Sportlich</span>
+    </div>
+
+    <div class="bars">
+      <div>
+        <div class="bar-top"><span>Zucker</span><b>71 g <em>von 50 g</em></b></div>
+        <div class="track"><i class="warn" style="width:100%"></i></div>
+      </div>
+      <div>
+        <div class="bar-top"><span>Eiweiß</span><b>94 g <em>von 120 g</em></b></div>
+        <div class="track"><i style="width:78%"></i></div>
+      </div>
+      <div>
+        <div class="bar-top"><span>Ballaststoffe</span><b>21 g <em>von 30 g</em></b></div>
+        <div class="track"><i style="width:70%"></i></div>
+      </div>
+    </div>
+
+    <div class="split">
+      <!-- Real trapezoids: the silhouette is what carries at thumbnail
+           size, and stacked rectangles do not make one. -->
+      <figure>
+        <svg viewBox="0 0 220 150" role="img"
+             aria-label="Dein Einkauf: zu viel Süßes, zu wenig Obst und Gemüse">
+          <path d="M55 120 H165 L171 148 H49 Z"   fill="var(--g1)"/>
+          <path d="M37 90  H183 L189 118 H31 Z"   fill="var(--g2)"/>
+          <path d="M46 60  H174 L180 88  H40 Z"   fill="var(--g3)"/>
+          <path d="M76 30  H144 L150 58  H70 Z"   fill="var(--g4)"/>
+          <path d="M22 2   H198 L204 28  H16 Z"   fill="var(--g5)"/>
+        </svg>
+        <figcaption>Dein Einkauf</figcaption>
+      </figure>
+
+      <figure>
+        <svg viewBox="0 0 220 150" role="img"
+             aria-label="Empfohlene Ernährungspyramide">
+          <path d="M18 120 H202 L210 148 H10 Z"  fill="var(--g1)"/>
+          <path d="M34 90  H186 L194 118 H26 Z"  fill="var(--g2)"/>
+          <path d="M53 60  H167 L175 88  H45 Z"  fill="var(--g3)"/>
+          <path d="M72 30  H148 L156 58  H64 Z"  fill="var(--g4)"/>
+          <path d="M96 2   H124 L132 28  H88 Z"  fill="var(--g5)"/>
+        </svg>
+        <figcaption>Empfehlung</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
