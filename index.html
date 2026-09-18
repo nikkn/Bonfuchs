@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Bonfuchs | Kassenbon scannen und automatisch auswerten</title>
+<meta name="description" content="Kassenbon scannen, Ausgaben und Nährwerte automatisch auswerten. Kostenlos, für Aldi, Edeka, Lidl und Kaufland. Auf die Warteliste.">
+<link rel="canonical" href="https://nikkn.github.io/Bonfuchs/">
+
+<meta name="robots" content="index, follow">
+<meta name="author" content="Bonfuchs">
+
+<!-- Open Graph: what a shared link looks like in WhatsApp, Slack, LinkedIn.
+     For a waitlist, most traffic arrives through someone forwarding the
+     link, so this matters more than ranking does in the first months. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Bonfuchs">
+<meta property="og:title" content="Dein Kassenbon weiß mehr über dich als dein Haushaltsbuch">
+<meta property="og:description" content="Kassenbon scannen, Ausgaben und Nährwerte automatisch auswerten. Kostenlos, für Aldi, Edeka, Lidl und Kaufland. Auf die Warteliste.">
+<meta property="og:url" content="https://nikkn.github.io/Bonfuchs/">
+<meta property="og:image" content="https://nikkn.github.io/Bonfuchs/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dein Kassenbon weiß mehr über dich als dein Haushaltsbuch">
+<meta name="twitter:description" content="Kassenbon scannen, Ausgaben und Nährwerte automatisch auswerten. Kostenlos, für Aldi, Edeka, Lidl und Kaufland. Auf die Warteliste.">
+<meta name="twitter:image" content="https://nikkn.github.io/Bonfuchs/og.png">
+
+<meta name="theme-color" content="#f4f5f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131615" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap">
+
+<!-- Structured data. Tells Google this is a software product in planning,
+     which is what it is. Do not claim ratings or a price that does not
+     exist yet: invented review counts are exactly what manual spam
+     actions are for. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Bonfuchs",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "de-DE",
+  "description": "Kassenbon scannen, Ausgaben und Nährwerte automatisch auswerten. Kostenlos, für Aldi, Edeka, Lidl und Kaufland. Auf die Warteliste.",
+  "url": "https://nikkn.github.io/Bonfuchs/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font: 14px ui-sans-serif, system-ui, sans-serif; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<style>
+  :root {
+    /* Neutrals carry the faintest green bias so they read as chosen
+       against the accent, rather than as default interface grey. */
+    --paper:      #f4f5f4;
+    --card:       #ffffff;
+    --ink:        #16191a;
+    --ink-soft:   #4f5658;
+    --ink-faint:  #858d8d;
+    --rule:       #e0e4e2;
+    --green:      #2b5f7f;
+    --green-soft: #eef4f8;
+    --amber:      #7a6420;
+    --amber-soft: #f6efdc;
+    --blue:       #2b5f7a;
+    --fox:        #b8451f;
+    --c1: #2f5d3f;  --c2: #4f8a6a;
+    --c3: #a2b58a;  --c4: #c8a34e;
+    --shadow:     0 1px 2px rgba(22,25,26,.05), 0 10px 26px -14px rgba(22,25,26,.20);
+  }
+  :root:not([data-theme="light"]) {
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #131615;
+      --card:       #1c201e;
+      --ink:        #eceeed;
+      --ink-soft:   #aab2af;
+      --ink-faint:  #7d8683;
+      --rule:       #2c322f;
+      --green:      #8fc4de;
+      --green-soft: #1a2832;
+      --amber:      #d3b063;
+      --amber-soft: #302a18;
+      --blue:       #7db4cf;
+      --fox:        #e8795a;
+      --c1: #8fc39c;  --c2: #5f9e7c;
+      --c3: #a7b98f;  --c4: #d3b063;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #131615;
+    --card:       #1c201e;
+    --ink:        #eceeed;
+    --ink-soft:   #aab2af;
+    --ink-faint:  #7d8683;
+    --rule:       #2c322f;
+    --green:      #8fc4de;
+    --green-soft: #1a2832;
+    --amber:      #d3b063;
+    --fox:        #e8795a;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 660px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 56px 72px;
+  }
+  .mono {
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* ---- masthead ---------------------------------------------------- */
+  .brand {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--fox);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(to right,
+      var(--rule) 0 4px, transparent 4px 8px);
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(30px, 6.4vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+    margin: 26px 0 0;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--green);
+  }
+  .standfirst {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin: 18px 0 0;
+    max-width: 52ch;
+  }
+
+  /* ---- layout: bon left, analysis right ------------------------------- */
+  .flow {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: minmax(0, 252px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 680px) {
+    .flow { grid-template-columns: minmax(0, 1fr); }
+    .arrow { rotate: 90deg; }
+  }
+  .col { display: grid; gap: 10px; }
+  /* Both column headings sit OUTSIDE their panels, same size and weight,
+     so the two halves read as a pair rather than as a box and its caption. */
+  .col-head {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 15px 16px 17px;
+  }
+  /* The till roll is the dull half on purpose: grey, monospaced, no colour.
+     Everything that carries meaning lives in the analysis column. */
+  .bon .till {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    line-height: 1.95;
+    color: var(--ink-soft);
+  }
+  .till .row { display: flex; justify-content: space-between; gap: 10px; }
+  .till .row span:last-child {
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .till .sum {
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px dashed var(--rule);
+    color: var(--ink); font-weight: 700;
+  }
+  .arrow { display: flex; justify-content: center; color: var(--ink-faint); }
+
+  .analysis { display: grid; gap: 12px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 15px 16px 17px;
+  }
+
+  /* ONE PALETTE, kept light so it sits with the pale ground rather than
+     punching through it. The deep blue survives only as text, where it
+     needs the contrast; every filled shape uses the lighter pair. */
+  .pal-a, .pal-b {
+    --acc:     #3f7fa8;   /* mid blue, for fills                */
+    --acc-ink: #2b5f7f;   /* darker, for text on pale ground    */
+    --acc-2:   #8fbcd4;   /* pale blue                          */
+    --warn:    #e0806a;   /* soft coral                         */
+    --warn-ink:#b8543a;
+    --under:   #b9d4e3;   /* palest blue, for "too little"      */
+    --acc-bg:  #eef4f8;
+    --warn-bg: #fceeea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .pal-a,
+    :root:not([data-theme="light"]) .pal-b {
+      --acc: #6aa8ca; --acc-ink: #8fc4de; --acc-2: #4a7a95;
+      --warn: #e09079; --warn-ink: #eda88f; --under: #3d6076;
+      --acc-bg: #1a2832; --warn-bg: #2e211c;
+    }
+  }
+  :root[data-theme="dark"] .pal-a,
+  :root[data-theme="dark"] .pal-b {
+    --acc: #6aa8ca; --acc-ink: #8fc4de; --acc-2: #4a7a95;
+    --warn: #e09079; --warn-ink: #eda88f; --under: #3d6076;
+    --acc-bg: #1a2832; --warn-bg: #2e211c;
+  }
+
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .card-head h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600; font-size: 16px; margin: 0;
+  }
+  .badge {
+    font-size: 11px; font-weight: 600;
+    color: var(--acc-ink); background: var(--acc-bg);
+    border-radius: 99px; padding: 3px 9px;
+  }
+  .badge.warn { color: var(--warn-ink); background: var(--warn-bg); }
+
+  /* ---- nutrition ------------------------------------------------------ */
+  .score { display: flex; align-items: center; gap: 11px; flex-wrap: wrap;
+           margin-bottom: 14px; }
+  .nutri { display: flex; border-radius: 4px; overflow: hidden; }
+  .nutri span {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 700; font-size: 12px; line-height: 1;
+    padding: 6px 8px; color: #fff; opacity: .32;
+  }
+  .nutri span:nth-child(1) { background: #038141; }
+  .nutri span:nth-child(2) { background: #85bb2f; }
+  .nutri span:nth-child(3) { background: #fecb02; color: #3d3100; }
+  .nutri span:nth-child(4) { background: #ee8100; }
+  .nutri span:nth-child(5) { background: #e63e11; }
+  .nutri span.on { opacity: 1; font-size: 16px; padding: 8px 12px;
+                   margin-block: -2px; }
+  .score-note { margin: 0; font-size: 12px; color: var(--ink-soft); }
+
+  .bars { display: grid; gap: 11px; }
+  .bar-head {
+    display: flex; justify-content: space-between; gap: 10px;
+    font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .bar-head .num {
+    font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink);
+  }
+  .bar-head .num em {
+    font-style: normal; font-weight: 400; color: var(--ink-faint);
+  }
+  .track {
+    height: 7px; border-radius: 99px;
+    background: var(--rule); overflow: hidden; display: flex;
+  }
+  .track i { display: block; height: 100%; background: var(--acc); }
+  .track i.good { background: var(--acc); }
+  .track i.warn { background: var(--warn); }
+  .track.split i + i { border-left: 1px solid var(--card); }
+  .bar-foot {
+    margin-top: 4px; font-size: 11px; color: var(--ink-faint);
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .key { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 7px; height: 7px; border-radius: 99px; display: inline-block; }
+  .dot.good, .dot.ok { background: var(--acc); }
+  .dot.warn, .dot.over { background: var(--warn); }
+  .dot.under { background: var(--under); }
+  .legend {
+    margin: 11px 0 0; font-size: 11px; color: var(--ink-faint);
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .lg-note { margin-left: auto; }
+
+  /* ---- two pyramids --------------------------------------------------- */
+  /* The right pyramid is correct, filled and labelled, so it works as the
+     legend: each food group is named once, in its own colour. The left one
+     repeats those colours at the width actually bought, which is why it
+     needs no labels of its own and why the comparison reads as shape. */
+  .pyramids {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: end;
+  }
+  .pyr-fig { margin: 0; }
+  .pyr-fig svg { width: 100%; height: auto; display: block; }
+  .pyr-fig figcaption {
+    margin-top: 7px; text-align: center;
+    font-size: 11.5px; font-weight: 600; color: var(--ink-soft);
+  }
+  .labelled text.in {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 8.5px; font-weight: 600; fill: #fff;
+  }
+  /* One hue per food group, ordered so the base of the pyramid is the
+     coolest and the tip the warmest: the colours themselves carry the
+     "more of this, less of that" reading before any number does. */
+  .pal-a, .pal-b {
+    --g1: #4a90a4;   /* Obst & Gemüse   */
+    --g2: #6ba3ba;   /* Getreide        */
+    --g3: #8fb8c9;   /* Milch           */
+    --g4: #e8a48c;   /* Fleisch         */
+    --g5: #d9705a;   /* Süßes           */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .pal-a,
+    :root:not([data-theme="light"]) .pal-b {
+      --g1: #4d8fa3; --g2: #5f93a8; --g3: #6f93a3;
+      --g4: #c4886f; --g5: #c25f49;
+    }
+  }
+  :root[data-theme="dark"] .pal-a,
+  :root[data-theme="dark"] .pal-b {
+    --g1: #4d8fa3; --g2: #5f93a8; --g3: #6f93a3;
+    --g4: #c4886f; --g5: #c25f49;
+  }
+  .pyr-key {
+    margin-top: 12px;
+    display: flex; gap: 6px 14px; flex-wrap: wrap;
+    font-size: 11.5px; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .pyr-key b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---- additive notice ------------------------------------------------ */
+  /* Left rule rather than a filled panel: it is a caution, and a fully
+     coloured box beside the coral pyramid tier would read as an error. */
+  .notice {
+    border-left: 3px solid var(--warn);
+  }
+  .notice-text { margin: 0; font-size: 13px; color: var(--ink-soft); }
+  .notice-text b { color: var(--ink); font-weight: 600; }
+  .notice-text .flag { color: var(--warn-ink); font-weight: 600; }
+
+  /* ---- swap ----------------------------------------------------------- */
+  .swap-card { background: var(--acc-bg); border-color: transparent; }
+  .swap-text { margin: 0; font-size: 13px; color: var(--ink-soft); }
+  .swap-text b { color: var(--ink); font-weight: 600; }
+  .win { color: var(--acc-ink); font-weight: 700; }
+
+  /* ---- spend, kept as a ledger ---------------------------------------- */
+  .ledger {
+    width: 100%; border-collapse: collapse;
+    font-size: 12.5px; font-variant-numeric: tabular-nums;
+  }
+  .ledger th {
+    text-align: left; font-weight: 600; font-size: 10.5px;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 0 6px; border-bottom: 1px solid var(--rule);
+  }
+  .ledger td { padding: 5px 0; color: var(--ink-soft); }
+  .ledger .r { text-align: right; }
+  .ledger .dim { color: var(--ink-faint); }
+  .ledger tbody tr + tr td { border-top: 1px solid var(--rule); }
+  .ledger tfoot td {
+    border-top: 2px solid var(--ink);
+    padding-top: 7px; font-weight: 700; color: var(--ink);
+  }
+  .ledger.compact { margin-top: 12px; }
+  .ledger.compact td { padding: 4px 0; }
+  .ledger.compact tbody tr + tr td { border-top: 1px dashed var(--rule); }
+  .ledger .up { color: var(--warn-ink); font-weight: 700; }
+
+  /* ---- benefits ----------------------------------------------------- */
+  .benefits {
+    margin-top: 60px;
+    display: grid;
+    gap: 34px;
+  }
+  .benefit h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 21px;
+    letter-spacing: -.01em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .benefit p {
+    margin: 0;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  .benefit .tag {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--green);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---- network effect note ------------------------------------------ */
+  .network {
+    margin-top: 52px;
+    background: var(--green-soft);
+    border-radius: 3px;
+    padding: 22px 20px;
+  }
+  .network h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 19px;
+    margin: 0 0 8px;
+  }
+  .network p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .network code {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .story { max-width: 56ch; }
+  .story p { margin: 0 0 14px; color: var(--ink-soft); }
+  .story p:last-child { margin-bottom: 22px; }
+  .story b { color: var(--ink); font-weight: 600; }
+  .story .mono { font-size: 13px; color: var(--ink); }
+  .story .ask {
+    color: var(--ink);
+    font-weight: 500;
+    border-left: 2px solid var(--green);
+    padding-left: 12px;
+  }
+  /* Marks a fact the author still has to fill in, so it cannot be
+     published by accident looking like finished copy. */
+  [data-slot] {
+    background: var(--green-soft);
+    border-bottom: 1px dashed var(--green);
+    padding: 0 3px;
+  }
+
+  /* ---- signup -------------------------------------------------------- */
+  .signup {
+    margin-top: 56px;
+    border-top: 2px solid var(--ink);
+    padding-top: 26px;
+  }
+  .signup h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .signup p { margin: 0 0 20px; color: var(--ink-soft); max-width: 52ch; }
+  /* The embed brings its own chrome, so this is just a container that
+     keeps the iframe inside the page's rhythm. */
+  .formslot { margin-top: 4px; }
+  .formslot iframe { display: block; width: 100%; border: 0; }
+  label.sr {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  input[type="email"] {
+    flex: 1 1 220px;
+    min-width: 0;
+    font: inherit;
+    font-size: 15px;
+    padding: 11px 13px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  input[type="email"]::placeholder { color: var(--ink-faint); }
+  input[type="email"]:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 11px 20px;
+    color: var(--paper);
+    background: var(--green);
+    border: 1px solid var(--green);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  :root[data-theme="dark"] button,
+  :root:not([data-theme="light"]) button { color: #131615; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) button { color: var(--paper); }
+  }
+  button:hover { opacity: .9; }
+  .note {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    max-width: 52ch;
+  }
+
+  .foot-brand { color: var(--fox); font-weight: 700; }
+  footer {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--rule);
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">Bonfuchs</div>
+
+  <h1>Dein Kassenbon weiß mehr über dich<br><em>als dein Haushaltsbuch.</em></h1>
+
+  <p class="standfirst">
+    Ein Foto vom Bon. Daraus werden deine Ausgaben und dein
+    Ernährungsprofil erstellt, ohne ein einziges Mahlzeiten-Logbuch.
+  </p>
+
+  <!-- The bon is real: these are genuine lines, spellings and article
+       numbers taken from actual Aldi and Kaufland receipts. -->
+  <div class="flow">
+    <section class="col">
+      <h2 class="col-head">Dein Kassenbon</h2>
+      <div class="panel bon">
+        <div class="till">
+          <div class="row"><span>468970 Mini.Risp.Toma</span><span>1,89</span></div>
+          <div class="row"><span>229426 Zwetschgen lose</span><span>2,99</span></div>
+          <div class="row"><span>187406 Proteinbrot</span><span>1,99</span></div>
+          <div class="row"><span>558702 Speisequark 40 %</span><span>0,79</span></div>
+          <div class="row"><span>693417 LL H - Milch 3,5</span><span>0,99</span></div>
+          <div class="row"><span>262153 Mini - Donuts</span><span>1,99</span></div>
+          <div class="row"><span>228798 Trauben hell 500g</span><span>1,59</span></div>
+          <div class="row"><span>524391 Österr . Bergkäse</span><span>3,99</span></div>
+          <div class="row sum"><span>SUMME</span><span>16,22</span></div>
+        </div>
+      </div>
+      <div class="arrow" aria-hidden="true">
+        <svg viewBox="0 0 40 24" width="34" height="21" role="presentation" focusable="false">
+          <path d="M2 12 H30 M23 5 L30 12 L23 19" fill="none"
+                stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="col">
+      <h2 class="col-head">Deine Auswertung</h2>
+      <div class="analysis">
+
+        <!-- PALETTE A: blue + coral -->
+        <div class="card pal-a">
+          <div class="card-head">
+            <h3>Nährwerte pro Tag</h3>
+            <span class="badge">Profil: Sportlich</span>
+          </div>
+          <div class="score">
+            <div class="nutri" role="img" aria-label="Nutri-Score C">
+              <span>A</span><span>B</span><span class="on">C</span><span>D</span><span>E</span>
+            </div>
+            <p class="score-note">Schnitt deines Einkaufs</p>
+          </div>
+          <div class="bars">
+            <div class="bar">
+              <div class="bar-head"><span>Kohlenhydrate</span><span class="num">243 g <em>von 280 g</em></span></div>
+              <div class="track"><i class="good" style="width:87%"></i></div>
+            </div>
+            <div class="bar">
+              <div class="bar-head"><span>Eiweiß</span><span class="num">94 g <em>von 120 g</em></span></div>
+              <div class="track"><i class="good" style="width:78%"></i></div>
+            </div>
+            <div class="bar">
+              <div class="bar-head"><span>Fett</span><span class="num">62 g <em>von 70 g</em></span></div>
+              <div class="track split">
+                <i class="good" style="width:60%"></i><i class="warn" style="width:29%"></i>
+              </div>
+              <div class="bar-foot">
+                <span class="key"><span class="dot good"></span>ungesättigt 37 g</span>
+                <span class="key"><span class="dot warn"></span>gesättigt 25 g</span>
+              </div>
+            </div>
+            <div class="bar">
+              <div class="bar-head"><span>Zucker</span><span class="num">71 g <em>von 50 g</em></span></div>
+              <div class="track"><i class="warn" style="width:100%"></i></div>
+              <div class="bar-foot">66 % davon aus verarbeiteten Produkten</div>
+            </div>
+            <div class="bar">
+              <div class="bar-head"><span>Ballaststoffe</span><span class="num">21 g <em>von 30 g</em></span></div>
+              <div class="track"><i class="good" style="width:70%"></i></div>
+            </div>
+          </div>
+          <p class="legend">
+            Zielwerte nach ernährungswissenschaftlichen Empfehlungen für ein
+            sportliches Profil.
+          </p>
+        </div>
+
+        <div class="card pal-a notice">
+          <div class="card-head"><h3>Hinweis</h3></div>
+          <p class="notice-text">
+            <b>Fruchteis Mango-Maracuja</b> aus deinem Einkauf enthält den
+            Farbstoff <b>E 110</b> (Gelborange S). Produkte damit müssen in
+            der EU den Hinweis tragen, dass er
+            <span class="flag">Aktivität und Aufmerksamkeit bei Kindern
+            beeinträchtigen</span> kann.
+          </p>
+        </div>
+
+        <!-- PALETTE B: violet + amber -->
+        <div class="card pal-b">
+          <div class="card-head">
+            <h3>Ernährungspyramide</h3>
+            <span class="badge warn">Zwei Ebenen verfehlt</span>
+          </div>
+
+          <div class="pyramids">
+            <figure class="pyr-fig">
+              <svg viewBox="0 0 220 158" role="img"
+                   aria-label="Dein Einkauf: Süßes und Snacks deutlich zu viel, Obst und Gemüse zu wenig">
+                <rect x="55" y="126" width="109" height="26" rx="2" fill="var(--g1)"/>
+                <rect x="43" y="97" width="133" height="26" rx="2" fill="var(--g2)"/>
+                <rect x="47" y="68" width="125" height="26" rx="2" fill="var(--g3)"/>
+                <rect x="74" y="39" width="72" height="26" rx="2" fill="var(--g4)"/>
+                <rect x="55" y="10" width="110" height="26" rx="2" fill="var(--g5)"/>
+              </svg>
+              <figcaption>Dein Einkauf</figcaption>
+            </figure>
+
+            <figure class="pyr-fig labelled">
+              <svg viewBox="0 0 220 158" role="img"
+                   aria-label="Empfohlene Ernährungspyramide von Obst und Gemüse unten bis Süßes oben">
+                <rect x="19" y="126" width="182" height="26" rx="2" fill="var(--g1)"/>
+                <text x="110" y="142" text-anchor="middle" class="in">Obst &amp; Gemüse</text>
+                <rect x="36" y="97" width="148" height="26" rx="2" fill="var(--g2)"/>
+                <text x="110" y="113" text-anchor="middle" class="in">Getreide &amp; Brot</text>
+                <rect x="53" y="68" width="114" height="26" rx="2" fill="var(--g3)"/>
+                <text x="110" y="84" text-anchor="middle" class="in">Milchprodukte</text>
+                <rect x="70" y="39" width="80" height="26" rx="2" fill="var(--g4)"/>
+                <text x="110" y="55" text-anchor="middle" class="in">Fleisch</text>
+                <rect x="87" y="10" width="46" height="26" rx="2" fill="var(--g5)"/>
+                <text x="110" y="26" text-anchor="middle" class="in">Süßes</text>
+              </svg>
+              <figcaption>Empfehlung</figcaption>
+            </figure>
+          </div>
+
+          <div class="pyr-key">
+            <span><b>Süßes</b> 2,4×</span>
+            <span><b>Fleisch</b> 0,9×</span>
+            <span><b>Milch</b> 1,1×</span>
+            <span><b>Getreide</b> 0,9×</span>
+            <span><b>Obst &amp; Gemüse</b> 0,6×</span>
+          </div>
+
+        </div>
+
+        <!-- swap: same product type, hidden sugar -->
+        <div class="card pal-a swap-card">
+          <div class="card-head"><h3>Vorschlag</h3></div>
+          <p class="swap-text">
+            Dein <b>Almgold Fruchtjoghurt Erdbeere</b> enthält
+            <b>13,8 g Zucker</b> pro 100 g. Der
+            <b>Wiesenhof Fruchtjoghurt Erdbeere</b> im selben Markt kommt
+            auf 9,1 g: <span class="win">34 % weniger Zucker</span> bei
+            gleichem Preis.
+          </p>
+        </div>
+
+        <!-- spend, as a ledger -->
+        <div class="card pal-b">
+          <div class="card-head">
+            <h3>Ausgaben im Monat</h3>
+            <span class="badge">284,60 €</span>
+          </div>
+          <table class="ledger">
+            <thead>
+              <tr><th>Kategorie</th><th class="r">Betrag</th><th class="r">Anteil</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Obst &amp; Gemüse</td><td class="r">68,40</td><td class="r dim">24,0 %</td></tr>
+              <tr><td>Fleisch &amp; Fisch</td><td class="r">52,10</td><td class="r dim">18,3 %</td></tr>
+              <tr><td>Milchprodukte</td><td class="r">41,85</td><td class="r dim">14,7 %</td></tr>
+              <tr><td>Getreide &amp; Brot</td><td class="r">37,20</td><td class="r dim">13,1 %</td></tr>
+              <tr><td>Süßwaren &amp; Snacks</td><td class="r">31,75</td><td class="r dim">11,2 %</td></tr>
+              <tr><td>Getränke</td><td class="r">28,90</td><td class="r dim">10,2 %</td></tr>
+              <tr><td>Non-Food</td><td class="r">24,40</td><td class="r dim">8,6 %</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><td>Summe</td><td class="r">284,60</td><td class="r dim">100 %</td></tr>
+            </tfoot>
+          </table>
+          <table class="ledger compact">
+            <tbody>
+              <tr><td>Vormonat</td><td class="r">271,15</td><td class="r up">+5,0 %</td></tr>
+              <tr><td>Deine Inflation, 12 Monate</td><td class="r"></td><td class="r up">+4,2 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="benefits">
+    <div class="benefit">
+      <span class="tag">Ausgaben</span>
+      <h2>Ausgaben, ohne Tippen.</h2>
+      <p>
+        Scanne deinen Kassenbon, den Rest erledigt die App. Sieh, wohin dein
+        Geld beim Einkaufen wirklich fließt, und lass dir deine persönliche
+        Inflation berechnen: nicht die allgemein bekannte, sondern die
+        deines eigenen Warenkorbs.
+      </p>
+    </div>
+
+    <div class="benefit">
+      <span class="tag">Ernährung</span>
+      <h2>Analysiere, was du wirklich isst.</h2>
+      <p>
+        Nährwerte, Zucker, Eiweiß und Zusatzstoffe, ohne ein einziges
+        Mahlzeiten-Logbuch. Ernährst du dich im Alltag wirklich so, wie du
+        möchtest? Dein Einkaufszettel kennt die Antwort.
+      </p>
+    </div>
+
+    <div class="benefit">
+      <span class="tag">Tipps</span>
+      <h2>Besser essen, weniger zahlen.</h2>
+      <p>
+        Produktalternativen mit weniger Zucker oder besserem Preis und dein
+        jährliches Einsparpotenzial in Euro.
+      </p>
+    </div>
+  </div>
+
+  <div class="network">
+    <h2>Wird mit jedem Kassenbon besser.</h2>
+    <p>
+      Die kryptischen Kürzel auf den Bons sind innerhalb einer
+      Supermarktkette immer gleich. Wird so ein Kürzel einmal erkannt,
+      profitieren alle User davon.
+    </p>
+  </div>
+
+  <div class="signup">
+    <h2>Warum es diese Seite gibt</h2>
+    <div class="story">
+      <p>
+        Eine solche App ist aufwändiger, als sie klingt. Jeder Supermarkt
+        druckt seine eigenen Kürzel auf den Bon. Aus solchen kryptischen
+        Abkürzungen muss erst einmal zuverlässig ein echtes Produkt mit
+        echten Nährwerten werden - bei hunderttausenden Produkten keine
+        leichte Aufgabe.
+      </p>
+      <p>
+        Nach einiger Entwicklungszeit zeigen die Algorithmen dafür inzwischen
+        vielversprechende Ergebnisse: <b>über 70 % der Lebensmittel auf
+        echten Kassenbons werden korrekt erkannt.</b> Gleichzeitig lebt ein
+        solches Projekt von seinen Nutzern: Je mehr Bons zusammenkommen,
+        desto besser wird die Erkennung für alle. Deshalb soll zunächst das
+        allgemeine Interesse abgefragt werden.
+      </p>
+      <p>
+        Übrigens: <b>Die App soll kostenlos sein</b>, und wenn genug
+        Interesse zusammenkommt, würde ich sie am liebsten gemeinsam mit
+        euch entwickeln: mit euren Bons, euren Supermärkten und der Frage,
+        was ihr eigentlich über euren Einkauf wissen möchtet.
+      </p>
+      <p class="ask">
+        Trage dich gleich in den Verteiler ein! Und wenn du möchtest,
+        schreib mir, welche Funktionen du dir wünschen würdest.
+      </p>
+    </div>
+
+    <div class="formslot">
+      <iframe data-tally-src="https://tally.so/embed/Y52zYN?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1"
+              loading="lazy" width="100%" height="379" frameborder="0"
+              marginheight="0" marginwidth="0"
+              title="Bonfuchs Warteliste"></iframe>
+    </div>
+
+    <p class="note">
+      Gespeichert wird nur deine E-Mail-Adresse. Du bekommst eine
+      Nachricht, sobald es etwas zu zeigen gibt. Keine Weitergabe,
+      jederzeit abbestellbar.
+    </p>
+  </div>
+
+  <footer>
+    <span class="foot-brand">Bonfuchs</span>
+    <span>Aldi · Edeka · Lidl · Kaufland und mehr</span>
+  </footer>
+
+</div>
+
+<script>
+  var d = document, w = "https://tally.so/widgets/embed.js";
+  var v = function () {
+    if (typeof Tally !== "undefined") {
+      Tally.loadEmbeds();
+    } else {
+      d.querySelectorAll("iframe[data-tally-src]:not([src])")
+        .forEach(function (e) { e.src = e.dataset.tallySrc; });
+    }
+  };
+  if (typeof Tally !== "undefined") {
+    v();
+  } else if (d.querySelector('script[src="' + w + '"]') == null) {
+    var s = d.createElement("script");
+    s.src = w; s.onload = v; s.onerror = v;
+    d.body.appendChild(s);
+  }
+</script>
+</body>
+</html>
