@@ -561,9 +561,6 @@
   }
 
   .foot-brand { color: var(--fox); font-weight: 700; }
-  .legal { display: flex; gap: 14px; }
-  .legal a { color: var(--ink-faint); text-decoration: none; }
-  .legal a:hover { color: var(--ink-soft); text-decoration: underline; }
   footer {
     margin-top: 56px;
     padding-top: 18px;
@@ -578,6 +575,11 @@
     flex-wrap: wrap;
   }
 </style>
+
+<!-- GoatCounter: cookielos, keine personenbezogenen Daten, daher ohne
+     Consent-Banner zulässig. Dashboard: nikkn.goatcounter.com -->
+<script data-goatcounter="https://nikkn.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -863,15 +865,30 @@
   <footer>
     <span class="foot-brand">Bonfuchs</span>
     <span>Aldi · Edeka · Lidl · Kaufland und mehr</span>
-    <span class="legal">
-      <a href="impressum.html">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-    </span>
   </footer>
 
 </div>
 
 <script>
+  // UTM-Parameter der Seiten-URL an das Tally-Formular weiterreichen, damit
+  // in den Eintragungen steht, welcher Kanal sie gebracht hat. Ohne das
+  // misst man Klicks; damit misst man, was tatsaechlich konvertiert.
+  (function () {
+    var here = new URLSearchParams(location.search);
+    var keep = ["utm_source", "utm_medium", "utm_campaign", "utm_content",
+                "utm_term", "ref"];
+    var pass = [];
+    keep.forEach(function (k) {
+      var v = here.get(k);
+      if (v) { pass.push(encodeURIComponent(k) + "=" + encodeURIComponent(v)); }
+    });
+    if (pass.length) {
+      document.querySelectorAll("iframe[data-tally-src]").forEach(function (f) {
+        f.dataset.tallySrc += "&" + pass.join("&");
+      });
+    }
+  })();
+
   var d = document, w = "https://tally.so/widgets/embed.js";
   var v = function () {
     if (typeof Tally !== "undefined") {
